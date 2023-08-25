@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Writer
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 class Home(View):
 	def get(self, request):
@@ -43,7 +45,7 @@ class UserRegisterView(View):
 		return render(request, self.template_name, {'form':form})
     
 
-class WriterView(View):
+class WriterView(LoginRequiredMixin, View):
     def get(self, request):
         writers = Writer.objects.all()
         return render(request, 'home/writers.html', {'writers':writers})
